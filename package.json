@@ -9,7 +9,8 @@
     "test": "jest",
     "lint": "eslint . --ext .ts,.tsx",
     "preios": "pod-install",
-    "clean": "react-native-clean-project"
+    "clean": "react-native-clean-project",
+    "xcode": "xed -b ios"
   },
   "dependencies": {
     "@react-navigation/drawer": "^6.1.8",
@@ -20,6 +21,7 @@
     "native-base": "^3.2.2",
     "react": "17.0.2",
     "react-native": "0.66.4",
+    "react-native-bootsplash": "^4.0.2",
     "react-native-dotenv": "^3.3.1",
     "react-native-gesture-handler": "^2.1.0",
     "react-native-mmkv-storage": "^0.6.6",

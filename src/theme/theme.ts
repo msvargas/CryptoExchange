@@ -27,7 +27,6 @@ export const colorModeManager: StorageManager = {
   get: async () => {
     try {
       const val = await StorageService.getStringAsync(APP_COLOR_MODE_KEY);
-      console.log('value:', val);
 
       return val === 'dark' ? val : 'light';
     } catch (error) {

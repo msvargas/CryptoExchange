@@ -12,6 +12,7 @@ import {
   useColorModeValue,
   VStack,
 } from 'native-base';
+import RNBootSplash from 'react-native-bootsplash';
 import {
   DarkTheme,
   DefaultTheme,
@@ -75,7 +76,10 @@ const AppContainer = () => (
       translucent
       backgroundColor="transparent"
     />
-    <NavigationContainer theme={useColorModeValue(DefaultTheme, DarkTheme)}>
+    <NavigationContainer
+      theme={useColorModeValue(DefaultTheme, DarkTheme)}
+      onReady={() => RNBootSplash.hide({ fade: true })}
+    >
       <Stack.Navigator>
         <Stack.Screen name="Home" component={Home} />
       </Stack.Navigator>
