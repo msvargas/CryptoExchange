@@ -4,6 +4,7 @@ import {
   Code,
   Heading,
   HStack,
+  Image,
   Link,
   StatusBar,
   Switch,
@@ -59,6 +60,7 @@ const Home = () => (
         <Code>App.tsx</Code>
         <Text>and save to reload.</Text>
       </HStack>
+      <Image source={require('~assets/bootsplash_logo.png')} alt="App logo" />
       <Link href="https://docs.nativebase.io" isExternal>
         <Text color="primary.500" underline fontSize={'xl'}>
           Learn NativeBase

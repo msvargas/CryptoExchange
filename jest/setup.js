@@ -3,6 +3,7 @@ import 'react-native-gesture-handler/jestSetup';
 jest.mock('react-native-bootsplash', () => {
   return {
     show: jest.fn().mockResolvedValueOnce(),
+    hide: jest.fn().mockResolvedValueOnce(),
     getVisibilityStatus: jest.fn().mockResolvedValue('hidden'),
   };
 });

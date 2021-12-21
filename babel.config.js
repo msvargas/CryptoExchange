@@ -16,8 +16,8 @@ module.exports = {
           /**
            * Regular expression is used to match all files inside `./src` directory and map each `.src/folder/[..]` to `~folder/[..]` path
            */
+          '^~assets(.+)': './assets\\1',
           '^~(.+)': './src/\\1',
-          '^~assets/(.+)': './assets/\\1',
         },
         extensions: [
           '.ios.js',
