@@ -4,7 +4,6 @@ module.exports = {
   plugins: ['simple-import-sort'],
   rules: {
     'no-shadow': 'off',
-    '@typescript-eslint/no-shadow': ['error'],
     'simple-import-sort/imports': [
       'error',
       {
