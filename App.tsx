@@ -5,7 +5,6 @@ import {
   Heading,
   HStack,
   Link,
-  NativeBaseProvider,
   StatusBar,
   Switch,
   Text,
@@ -20,19 +19,22 @@ import {
 } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import theme from '~theme';
+import { ThemeProvider } from '~theme';
 
 const Stack = createNativeStackNavigator();
 
 // Color Switch Component
 function ToggleDarkMode() {
   const { colorMode, toggleColorMode } = useColorMode();
+  const handleToggle = () => {
+    toggleColorMode();
+  };
   return (
     <HStack space={2} alignItems="center">
       <Text>Dark</Text>
       <Switch
         isChecked={colorMode === 'light' ? true : false}
-        onToggle={toggleColorMode}
+        onToggle={handleToggle}
         aria-label={
           colorMode === 'light' ? 'switch to dark mode' : 'switch to light mode'
         }
@@ -47,7 +49,8 @@ const Home = () => (
     _dark={{ bg: 'blueGray.900' }}
     _light={{ bg: 'blueGray.50' }}
     px={4}
-    flex={1}>
+    flex={1}
+  >
     <VStack space={5} alignItems="center">
       <Heading size="lg">Welcome to NativeBase</Heading>
       <HStack space={2} alignItems="center">
@@ -82,9 +85,9 @@ const AppContainer = () => (
 
 const App = () => {
   return (
-    <NativeBaseProvider theme={theme}>
+    <ThemeProvider>
       <AppContainer />
-    </NativeBaseProvider>
+    </ThemeProvider>
   );
 };
 
