@@ -1,4 +1,5 @@
 import React, { useCallback } from 'react';
+import { Linking } from 'react-native';
 import {
   Avatar,
   Box,
@@ -12,6 +13,8 @@ import {
 import Feather from 'react-native-vector-icons/Feather';
 import { DrawerContentComponentProps } from '@react-navigation/drawer';
 
+import config from '~config';
+
 import MenuButton from './MenuButton';
 import ThemeToggle from './ThemeToggle';
 
@@ -22,12 +25,14 @@ const Sidebar = (props: DrawerContentComponentProps) => {
   const handlePressBackButton = useCallback(() => {
     navigation.closeDrawer();
   }, [navigation]);
+
   const handlePressMenuMain = useCallback(() => {
-    navigation.navigate('Main');
+    navigation.navigate('Home');
   }, [navigation]);
+
   const handlePressMenuAbout = useCallback(() => {
-    navigation.navigate('About');
-  }, [navigation]);
+    Linking.openURL(config.githubProfileUrl);
+  }, []);
 
   return (
     <Box safeArea flex={1} bg={useColorModeValue('blue.50', undefined)} p={7}>
@@ -48,7 +53,7 @@ const Sidebar = (props: DrawerContentComponentProps) => {
         </HStack>
         <Avatar
           source={{
-            uri: 'https://avatars.githubusercontent.com/u/8255332?v=4',
+            uri: config.avatarProfileUrl,
           }}
           size="xl"
           borderRadius={100}
@@ -57,14 +62,14 @@ const Sidebar = (props: DrawerContentComponentProps) => {
           borderWidth={3}
         />
         <Heading mb={4} size="xl">
-          Michael Vargas
+          {config.author}
         </Heading>
         <MenuButton
           active={currentRoute === 'Main'}
           onPress={handlePressMenuMain}
           icon="inbox"
         >
-          Crypto List
+          Crypto Exchange
         </MenuButton>
         <MenuButton
           active={currentRoute === 'About'}

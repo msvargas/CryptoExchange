@@ -7,11 +7,10 @@
 [x] Add enviroment var support
 [x] Add bootsplash screen
 [x] Add basic react navigation
-[] Setup basic redux store
-[] Add theme provider
-[] Create API service
-[] Create redux thunks and entity adapters
-[] Implement normalizr with schema and models POO
+[x] Setup basic redux store
+[x] Add theme provider
+[x] Create API service
+[x] Create redux thunks and entity adapters
 [] Create paginator
 [] Implement UI for list crypto currency
 [] Implement search bar

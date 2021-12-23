@@ -1,15 +1,5 @@
 import React from 'react';
-import {
-  Center,
-  Code,
-  Heading,
-  HStack,
-  Image,
-  Link,
-  Text,
-  useColorModeValue,
-  VStack,
-} from 'native-base';
+import { useColorModeValue } from 'native-base';
 import RNBootSplash from 'react-native-bootsplash';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import {
@@ -20,33 +10,10 @@ import {
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import Sidebar from '~components/Sidebar';
+import HomeScreen from '~screens/Home.screen';
 
 const Drawer = createDrawerNavigator();
 const Stack = createNativeStackNavigator();
-
-const Home = () => (
-  <Center
-    _dark={{ bg: 'blueGray.900' }}
-    _light={{ bg: 'blueGray.50' }}
-    px={4}
-    flex={1}
-  >
-    <VStack space={5} alignItems="center">
-      <Heading size="lg">Welcome to NativeBase</Heading>
-      <HStack space={2} alignItems="center">
-        <Text>Edit</Text>
-        <Code>App.tsx</Code>
-        <Text>and save to reload.</Text>
-      </HStack>
-      <Image source={require('~assets/bootsplash_logo.png')} alt="App logo" />
-      <Link href="https://docs.nativebase.io" isExternal>
-        <Text color="primary.500" underline fontSize={'xl'}>
-          Learn NativeBase
-        </Text>
-      </Link>
-    </VStack>
-  </Center>
-);
 
 const Navigator = () => (
   <NavigationContainer
@@ -65,7 +32,14 @@ const Navigator = () => (
       <Drawer.Screen name="Main">
         {() => (
           <Stack.Navigator>
-            <Stack.Screen name="Home" component={Home} />
+            <Stack.Screen
+              name="Home"
+              options={{
+                headerSearchBarOptions: {},
+                headerShown: false,
+              }}
+              component={HomeScreen}
+            />
           </Stack.Navigator>
         )}
       </Drawer.Screen>
