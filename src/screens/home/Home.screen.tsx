@@ -6,6 +6,7 @@ import {
   StyleSheet,
 } from 'react-native';
 import { Box, Divider, Spinner, Text, useColorModeValue } from 'native-base';
+import { useDrawerStatus } from '@react-navigation/drawer';
 import throttle from 'lodash/throttle';
 
 import { useAppDispatch, useAppSelector } from '~store/hooks';
@@ -33,7 +34,9 @@ function HomeScreen() {
   const isLoading = useAppSelector(selectIsLoadingCoins);
   const [refreshing, setRefreshing] = React.useState(false);
   const refreshControlColor = useColorModeValue(undefined, 'white');
-  const windowSize = coins.length > 100 ? Math.floor(coins.length / 5) : 21;
+  const isDrawerOpen = useDrawerStatus() === 'open';
+
+  const windowSize = coins.length > 100 ? Math.floor(coins.length / 6) : 21;
 
   const getAllCoins = useCallback(
     async (params?: AllCoinsParams) => {
@@ -94,13 +97,12 @@ function HomeScreen() {
         }
         renderItem={renderCoinItem}
         ItemSeparatorComponent={Divider}
-        keyExtractor={item => item.nameid}
         indicatorStyle={refreshControlColor}
         onEndReached={fetchMoreCoins}
         onEndReachedThreshold={0.5}
-        initialNumToRender={21}
-        maxToRenderPerBatch={windowSize}
-        windowSize={windowSize}
+        initialNumToRender={15}
+        maxToRenderPerBatch={isDrawerOpen ? 10 : windowSize}
+        windowSize={isDrawerOpen ? 21 : windowSize}
         removeClippedSubviews={true}
         refreshControl={
           <RefreshControl
