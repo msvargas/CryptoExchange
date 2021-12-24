@@ -1,24 +1,16 @@
 import React, { useCallback } from 'react';
-import {
-  FlatList,
-  ListRenderItem,
-  RefreshControl,
-  StyleSheet,
-} from 'react-native';
-import { Box, Divider, Spinner, Text, useColorModeValue } from 'native-base';
+import { FlatList, ListRenderItem, StyleSheet } from 'react-native';
+import { Divider, useColorModeValue } from 'native-base';
 import { useDrawerStatus } from '@react-navigation/drawer';
 import throttle from 'lodash/throttle';
 
+import RefreshControlColorMode from '~components/RefreshControlColorMode';
 import { useAppDispatch, useAppSelector } from '~store/hooks';
-import {
-  loadMoreCoins,
-  selectAllCoins,
-  selectIsLoadingCoins,
-  selectIsUnitializedCoins,
-} from '~store/slices/coins.slice';
+import { loadMoreCoins, selectAllCoins } from '~store/slices/coins.slice';
 import { fetchAllCoins } from '~store/thunks/crypto.thunk';
 
 import CoinItem from './components/CoinItem';
+import Footer from './components/Footer';
 import Header from './components/Header';
 
 import type { AllCoinsParams, CoinsData } from '~services/types';
@@ -30,11 +22,9 @@ const renderCoinItem: ListRenderItem<CoinsData> = ({ item }) => (
 function HomeScreen() {
   const dispatch = useAppDispatch();
   const coins = useAppSelector(selectAllCoins);
-  const isUnitialized = useAppSelector(selectIsUnitializedCoins);
-  const isLoading = useAppSelector(selectIsLoadingCoins);
   const [refreshing, setRefreshing] = React.useState(false);
-  const refreshControlColor = useColorModeValue(undefined, 'white');
   const isDrawerOpen = useDrawerStatus() === 'open';
+  const indicatorStyle = useColorModeValue(undefined, 'white');
 
   const windowSize = coins.length > 100 ? Math.floor(coins.length / 6) : 21;
 
@@ -70,9 +60,7 @@ function HomeScreen() {
   }, [getAllCoins, coins.length]);
 
   React.useEffect(() => {
-    if (isUnitialized) {
-      getAllCoins();
-    }
+    getAllCoins();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -83,21 +71,10 @@ function HomeScreen() {
         style={styles.list}
         contentContainerStyle={styles.container}
         data={coins}
-        ListEmptyComponent={
-          !isLoading && !isUnitialized ? <Text>No coins</Text> : null
-        }
-        ListFooterComponent={
-          isLoading && !isUnitialized && !refreshing ? (
-            <Box alignItems="center" mb="8" safeAreaBottom>
-              <Divider mb="2" />
-              <Spinner />
-              <Text>Loading...</Text>
-            </Box>
-          ) : null
-        }
         renderItem={renderCoinItem}
         ItemSeparatorComponent={Divider}
-        indicatorStyle={refreshControlColor}
+        ListFooterComponent={Footer}
+        indicatorStyle={indicatorStyle}
         onEndReached={fetchMoreCoins}
         onEndReachedThreshold={0.5}
         initialNumToRender={15}
@@ -105,10 +82,8 @@ function HomeScreen() {
         windowSize={isDrawerOpen ? 21 : windowSize}
         removeClippedSubviews={true}
         refreshControl={
-          <RefreshControl
+          <RefreshControlColorMode
             refreshing={refreshing}
-            colors={refreshControlColor ? [refreshControlColor] : undefined}
-            tintColor={refreshControlColor}
             onRefresh={handleRefresh}
           />
         }
