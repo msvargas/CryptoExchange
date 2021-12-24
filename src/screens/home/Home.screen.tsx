@@ -8,7 +8,6 @@ import {
 import { Box, Divider, Spinner, Text, useColorModeValue } from 'native-base';
 import throttle from 'lodash/throttle';
 
-import { CoinsData } from '~services/types';
 import { useAppDispatch, useAppSelector } from '~store/hooks';
 import {
   loadMoreCoins,
@@ -20,6 +19,8 @@ import { fetchAllCoins } from '~store/thunks/crypto.thunk';
 
 import CoinItem from './components/CoinItem';
 import Header from './components/Header';
+
+import type { CoinsData } from '~services/types';
 
 const renderCoinItem: ListRenderItem<CoinsData> = ({ item }) => (
   <CoinItem key={item.nameid} {...item} />
@@ -46,6 +47,7 @@ function HomeScreen() {
   const fetchMoreCoins = useCallback(
     throttle(async () => {
       try {
+        // increment start variable to load more coins
         dispatch(loadMoreCoins());
         await getAllCoins();
       } catch (error) {
@@ -71,42 +73,41 @@ function HomeScreen() {
   return (
     <>
       <Header />
-      <Box flex={1} safeAreaBottom>
-        <FlatList
-          style={styles.list}
-          contentContainerStyle={styles.container}
-          data={coins}
-          ListEmptyComponent={
-            !isLoading && !isUnitialized ? <Text>No coins</Text> : null
-          }
-          ListFooterComponent={
-            isLoading && !isUnitialized && !refreshing ? (
-              <Box alignItems="center" mt="2">
-                <Spinner />
-                <Text>Loading data...</Text>
-              </Box>
-            ) : null
-          }
-          renderItem={renderCoinItem}
-          ItemSeparatorComponent={Divider}
-          keyExtractor={item => item.nameid}
-          indicatorStyle={refreshControlColor}
-          onEndReached={fetchMoreCoins}
-          onEndReachedThreshold={0.5}
-          maxToRenderPerBatch={windowSize}
-          initialNumToRender={21}
-          windowSize={windowSize}
-          removeClippedSubviews={true}
-          refreshControl={
-            <RefreshControl
-              refreshing={refreshing}
-              colors={[refreshControlColor]}
-              tintColor={refreshControlColor}
-              onRefresh={handleRefresh}
-            />
-          }
-        />
-      </Box>
+      <FlatList
+        style={styles.list}
+        contentContainerStyle={styles.container}
+        data={coins}
+        ListEmptyComponent={
+          !isLoading && !isUnitialized ? <Text>No coins</Text> : null
+        }
+        ListFooterComponent={
+          isLoading && !isUnitialized && !refreshing ? (
+            <Box alignItems="center" safeAreaBottom>
+              <Divider mb="2" />
+              <Spinner />
+              <Text>Loading...</Text>
+            </Box>
+          ) : null
+        }
+        renderItem={renderCoinItem}
+        ItemSeparatorComponent={Divider}
+        keyExtractor={item => item.nameid}
+        indicatorStyle={refreshControlColor}
+        onEndReached={fetchMoreCoins}
+        onEndReachedThreshold={0.5}
+        initialNumToRender={21}
+        maxToRenderPerBatch={windowSize}
+        windowSize={windowSize}
+        removeClippedSubviews={true}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            colors={[refreshControlColor]}
+            tintColor={refreshControlColor}
+            onRefresh={handleRefresh}
+          />
+        }
+      />
     </>
   );
 }
