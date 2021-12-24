@@ -20,7 +20,7 @@ import { fetchAllCoins } from '~store/thunks/crypto.thunk';
 import CoinItem from './components/CoinItem';
 import Header from './components/Header';
 
-import type { CoinsData } from '~services/types';
+import type { AllCoinsParams, CoinsData } from '~services/types';
 
 const renderCoinItem: ListRenderItem<CoinsData> = ({ item }) => (
   <CoinItem key={item.nameid} {...item} />
@@ -35,13 +35,16 @@ function HomeScreen() {
   const refreshControlColor = useColorModeValue(undefined, 'white');
   const windowSize = coins.length > 100 ? Math.floor(coins.length / 5) : 21;
 
-  const getAllCoins = useCallback(async () => {
-    try {
-      await dispatch(fetchAllCoins());
-    } catch (error) {
-      console.error(error);
-    }
-  }, [dispatch]);
+  const getAllCoins = useCallback(
+    async (params?: AllCoinsParams) => {
+      try {
+        await dispatch(fetchAllCoins(params));
+      } catch (error) {
+        console.error(error);
+      }
+    },
+    [dispatch],
+  );
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const fetchMoreCoins = useCallback(
@@ -59,9 +62,9 @@ function HomeScreen() {
 
   const handleRefresh = useCallback(async () => {
     setRefreshing(true);
-    await getAllCoins();
+    await getAllCoins({ start: 0, limit: coins.length });
     setRefreshing(false);
-  }, [getAllCoins]);
+  }, [getAllCoins, coins.length]);
 
   React.useEffect(() => {
     if (isUnitialized) {
@@ -82,7 +85,7 @@ function HomeScreen() {
         }
         ListFooterComponent={
           isLoading && !isUnitialized && !refreshing ? (
-            <Box alignItems="center" safeAreaBottom>
+            <Box alignItems="center" mb="8" safeAreaBottom>
               <Divider mb="2" />
               <Spinner />
               <Text>Loading...</Text>
@@ -102,7 +105,7 @@ function HomeScreen() {
         refreshControl={
           <RefreshControl
             refreshing={refreshing}
-            colors={[refreshControlColor]}
+            colors={refreshControlColor ? [refreshControlColor] : undefined}
             tintColor={refreshControlColor}
             onRefresh={handleRefresh}
           />
@@ -120,6 +123,5 @@ const styles = StyleSheet.create({
   },
   container: {
     flexGrow: 1,
-    paddingBottom: 40,
   },
 });

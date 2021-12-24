@@ -1,4 +1,4 @@
-# CryptoCurrency App
+# CryptoExchange App
 
 If you want to run the project from the repo,
 

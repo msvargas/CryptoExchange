@@ -67,7 +67,7 @@ const Sidebar = (props: DrawerContentComponentProps) => {
         <MenuButton
           active={currentRoute === 'Main'}
           onPress={handlePressMenuMain}
-          icon="inbox"
+          icon="dollar-sign"
         >
           Crypto Exchange
         </MenuButton>
