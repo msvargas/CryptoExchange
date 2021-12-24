@@ -9,3 +9,6 @@ export const handleApiSuccess = <T = unknown>(data: T) => ({
   success: true as const,
   data,
 });
+
+export const getCoinImgUrl = (nameid: string) =>
+  `https://www.coinlore.com/img/${nameid}.png`;

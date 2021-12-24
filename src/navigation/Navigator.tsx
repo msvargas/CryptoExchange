@@ -10,7 +10,7 @@ import {
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import Sidebar from '~components/Sidebar';
-import HomeScreen from '~screens/Home.screen';
+import HomeScreen from '~screens/home/Home.screen';
 
 const Drawer = createDrawerNavigator();
 const Stack = createNativeStackNavigator();

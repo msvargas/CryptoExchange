@@ -19,7 +19,13 @@ export const coinsSlice = createSlice({
     time: 0,
     start: 0,
   }),
-  reducers: {},
+  reducers: {
+    loadMoreCoins: state => {
+      if (state.status === 'idle' && state.start + 50 <= state.numCoins) {
+        state.start += 50;
+      }
+    },
+  },
   extraReducers: builder => {
     builder.addCase(fetchAllCoins.pending, state => {
       state.status = 'loading';
@@ -36,7 +42,7 @@ export const coinsSlice = createSlice({
   },
 });
 
-export const {} = coinsSlice.actions;
+export const { loadMoreCoins } = coinsSlice.actions;
 export const { selectAll: selectAllCoins, selectById: selectCoinById } =
   coinsAdapter.getSelectors((state: RootState) => state.coins);
 
