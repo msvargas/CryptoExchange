@@ -11,16 +11,20 @@ import { DrawerNavigationProp } from '@react-navigation/drawer';
 import { useNavigation } from '@react-navigation/native';
 
 import SearchBar from '~components/SearchBar';
+import { useAppDispatch } from '~store/hooks';
+import { setSearch } from '~store/slices/coins.slice';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
 function Header() {
   const searchInputRef = React.useRef<TextInput>(null);
   const navigation = useNavigation<DrawerNavigationProp<{}>>();
+  const dispatch = useAppDispatch();
+  const offset = useSharedValue(0);
+
   const handlePressMenuButton = useCallback(() => {
     navigation.openDrawer();
   }, [navigation]);
-  const offset = useSharedValue(0);
 
   const animatedStyles = useAnimatedStyle(() => {
     return {
@@ -40,6 +44,7 @@ function Header() {
         _dark={{
           backgroundColor: 'muted.800',
         }}
+        shadow="1"
         safeAreaTop
       >
         <IconButton
@@ -77,6 +82,7 @@ function Header() {
         >
           <SearchBar
             ref={searchInputRef}
+            onChangeText={text => dispatch(setSearch(text))}
             onBlur={() => {
               offset.value = withTiming(0);
             }}

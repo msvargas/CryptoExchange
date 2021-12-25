@@ -13,6 +13,7 @@ const SearchBar = forwardRef<TextInput, IInputProps>((props, ref) => (
     borderRadius="10"
     h={38}
     clearButtonMode="while-editing"
+    returnKeyType="done"
     InputLeftElement={
       <Icon
         as={Feather}
