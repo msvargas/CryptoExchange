@@ -25,8 +25,8 @@ export const coinsSlice = createSlice({
   }),
   reducers: {
     loadMoreCoins: state => {
-      if (state.status === 'idle' && state.start + 50 <= state.numCoins) {
-        state.start += 50;
+      if (state.status === 'idle' && state.start + 100 <= state.numCoins) {
+        state.start += 100;
       }
     },
     setSearch: (state, action: PayloadAction<string>) => {
