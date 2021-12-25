@@ -6,12 +6,14 @@ import {
   ChartDot,
   ChartPath,
   ChartPathProvider,
-  monotoneCubicInterpolation,
+  monotoneCubicInterpolation as interpolator,
+  Point,
 } from '@rainbow-me/animated-charts';
 
 import { getCoinChart } from '~services/Api.service';
-import { useAppSelector } from '~store/hooks';
+import { useAppDispatch, useAppSelector } from '~store/hooks';
 import { selectCoinById } from '~store/slices/coins.slice';
+import { fetchCoinDetails } from '~store/thunks/crypto.thunk';
 import { getCoinImgUrl } from '~utils/helpers';
 
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -24,15 +26,17 @@ type CoinDetailsNavigationProp = NativeStackScreenProps<
 
 const { width: SIZE } = Dimensions.get('window');
 
-const BasicExample = ({ route }: CoinDetailsNavigationProp) => {
-  const [points, setPoints] = React.useState([]);
+const BasicExample = ({
+  route: {
+    params: { coinId },
+  },
+}: CoinDetailsNavigationProp) => {
+  const [points, setPoints] = React.useState<Point[]>([]);
   const [stroke, setStroke] = React.useState('#fff');
-  const coin = useAppSelector(state =>
-    selectCoinById(state, route.params.coinId),
-  );
-
+  const coin = useAppSelector(state => selectCoinById(state, coinId));
+  const dispatch = useAppDispatch();
   React.useEffect(() => {
-    if (!coin) {
+    if (!coinId || !coin) {
       return;
     }
     let strokeColor: string | undefined;
@@ -65,20 +69,24 @@ const BasicExample = ({ route }: CoinDetailsNavigationProp) => {
         }
         setStroke(strokeColor || '#000');
       });
-    getCoinChart(coin.id).then(result => {
+
+    dispatch(fetchCoinDetails(coinId));
+
+    getCoinChart(coinId).then(result => {
       if (result.success) {
         const data = result.data.price;
-        setPoints(monotoneCubicInterpolation({ data, range: 40 }));
+        setPoints(interpolator({ data, range: 200 }));
       }
     });
-  }, [coin]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [coinId]);
 
   return (
     <Box bg="muted.100" safeArea>
       <Box>
         <ChartPathProvider data={{ points, smoothingStrategy: 'bezier' }}>
           <ChartPath height={SIZE / 2} stroke={stroke} width={SIZE} />
-          <ChartDot style={{ backgroundColor: stroke }} />
+          <ChartDot style={{ backgroundColor: stroke }} size={10} />
         </ChartPathProvider>
       </Box>
     </Box>

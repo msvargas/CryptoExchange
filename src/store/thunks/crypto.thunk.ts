@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-import { getAllCoins } from '~services/Api.service';
+import { getAllCoins, getCoinDetails } from '~services/Api.service';
 import { CoinsData } from '~services/types';
 
 import type { RootState } from '~store';
@@ -52,5 +52,13 @@ export const fetchAllCoins = createAsyncThunk(
         return false;
       }
     },
+  },
+);
+
+export const fetchCoinDetails = createAsyncThunk(
+  'coins/fetchCoinDetails',
+  async (coinId: string) => {
+    const result = await getCoinDetails(coinId);
+    return result;
   },
 );

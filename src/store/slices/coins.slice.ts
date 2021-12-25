@@ -7,7 +7,7 @@ import {
 } from '@reduxjs/toolkit';
 import deburr from 'lodash/deburr';
 
-import { fetchAllCoins } from '~store/thunks/crypto.thunk';
+import { fetchAllCoins, fetchCoinDetails } from '~store/thunks/crypto.thunk';
 
 import type { CoinsData } from '~services/types';
 import type { RootState } from '../store';
@@ -34,18 +34,28 @@ export const coinsSlice = createSlice({
     },
   },
   extraReducers: builder => {
-    builder.addCase(fetchAllCoins.pending, state => {
-      state.status = 'loading';
-    });
-    builder.addCase(fetchAllCoins.fulfilled, (state, action) => {
-      const response = action.payload;
-      if (response.success) {
-        state.numCoins = response.data.numCoins;
-        state.time = response.data.time;
-        coinsAdapter.upsertMany(state, response.data.coins);
-      }
-      state.status = 'idle';
-    });
+    builder
+      .addCase(fetchAllCoins.pending, state => {
+        state.status = 'loading';
+      })
+      .addCase(fetchAllCoins.fulfilled, (state, action) => {
+        const response = action.payload;
+        if (response.success) {
+          state.numCoins = response.data.numCoins;
+          state.time = response.data.time;
+          coinsAdapter.upsertMany(state, response.data.coins);
+        }
+        state.status = 'idle';
+      })
+      .addCase(fetchCoinDetails.fulfilled, (state, action) => {
+        const response = action.payload;
+        if (response.success) {
+          coinsAdapter.updateOne(state, {
+            id: response.data.id,
+            changes: response.data as unknown as CoinsData,
+          });
+        }
+      });
   },
 });
 

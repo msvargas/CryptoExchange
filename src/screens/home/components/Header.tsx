@@ -25,7 +25,16 @@ function Header() {
   const handlePressMenuButton = useCallback(() => {
     navigation.openDrawer();
   }, [navigation]);
-
+  const handlePressSearchButton = useCallback(() => {
+    searchInputRef.current?.focus();
+    offset.value = withTiming(1);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  const handleChangeText = (text: string) => dispatch(setSearch(text.trim()));
+  const handleBlur = () => {
+    offset.value = withTiming(0);
+    dispatch(setSearch(''));
+  };
   const animatedStyles = useAnimatedStyle(() => {
     return {
       transform: [{ translateX: (1 - offset.value) * SCREEN_WIDTH }],
@@ -58,10 +67,7 @@ function Header() {
         <Heading>Crypto Price</Heading>
         <IconButton
           icon={<Icon as={Feather} name="search" size="5" />}
-          onPress={() => {
-            searchInputRef.current?.focus();
-            offset.value = withTiming(1);
-          }}
+          onPress={handlePressSearchButton}
         />
       </Row>
       <Animated.View
@@ -81,10 +87,8 @@ function Header() {
         >
           <SearchBar
             ref={searchInputRef}
-            onChangeText={text => dispatch(setSearch(text))}
-            onBlur={() => {
-              offset.value = withTiming(0);
-            }}
+            onChangeText={handleChangeText}
+            onBlur={handleBlur}
           />
         </Box>
       </Animated.View>

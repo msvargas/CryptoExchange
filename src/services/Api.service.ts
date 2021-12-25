@@ -51,11 +51,11 @@ export const getAllCoins = async ({ limit, start }: AllCoinsParams) => {
   }
 };
 
-export const getCoinDetails = async (coin: string) => {
+export const getCoinDetails = async (coinId: string) => {
   try {
-    const response = await api.get<CoinDetailsResponse>('/tickers/', {
+    const response = await api.get<CoinDetailsResponse>('/ticker/', {
       params: {
-        id: coin,
+        id: coinId,
       },
     });
     return handleApiSuccess(response.data[0]);
