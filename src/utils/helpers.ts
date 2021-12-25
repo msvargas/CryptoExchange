@@ -10,5 +10,5 @@ export const handleApiSuccess = <T = unknown>(data: T) => ({
   data,
 });
 
-export const getCoinImgUrl = (nameid: string) =>
-  `https://www.coinlore.com/img/${nameid}.png`;
+export const getCoinImgUrl = (nameid: string, small?: boolean) =>
+  `https://www.coinlore.com/img/${small ? '25x25/' : ''}${nameid}.png`;

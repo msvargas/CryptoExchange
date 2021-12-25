@@ -69,7 +69,7 @@ const Sidebar = (props: DrawerContentComponentProps) => {
           onPress={handlePressMenuMain}
           icon="dollar-sign"
         >
-          Crypto Exchange
+          Crypto Price
         </MenuButton>
         <MenuButton
           active={currentRoute === 'About'}

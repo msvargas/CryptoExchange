@@ -55,7 +55,7 @@ function Header() {
             size: 6,
           }}
         />
-        <Heading>Crypto Exchange</Heading>
+        <Heading>Crypto Price</Heading>
         <IconButton
           icon={<Icon as={Feather} name="search" size="5" />}
           onPress={() => {

@@ -65,3 +65,10 @@ export interface CoinDetails {
 export interface CoinDetailsResponse extends Array<CoinDetails> {}
 
 export type AllCoinsParams = Record<'limit' | 'start', number>;
+
+export type CoinChartData = Array<[number, number]>;
+
+export type CoinChartResponse = Record<
+  'price' | 'price_btc' | 'mcap' | 'volume',
+  CoinChartData
+>;

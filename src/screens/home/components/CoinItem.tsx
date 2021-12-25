@@ -1,7 +1,8 @@
 import React from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, TouchableOpacity } from 'react-native';
 import { Box, Row, Text, useColorModeValue } from 'native-base';
 import FastImage from 'react-native-fast-image';
+import { useNavigation } from '@react-navigation/native';
 
 import { getCoinImgUrl } from '~utils/helpers';
 
@@ -10,57 +11,71 @@ import type { CoinsData } from '~services/types';
 type Props = CoinsData;
 
 const CoinItem = ({
+  id,
   name,
   nameid,
   symbol,
   price_usd,
   percent_change_24h,
-}: Props) => (
-  <Row
-    justifyContent="space-evenly"
-    alignItems="center"
-    py="2"
-    px="6"
-    height={60}
-  >
-    <FastImage
-      style={[
-        styles.coinImg,
-        { backgroundColor: useColorModeValue(undefined, 'lightgrey') },
-      ]}
-      source={{
-        uri: getCoinImgUrl(nameid),
-      }}
-      resizeMode={FastImage.resizeMode.contain}
-    />
-    <Box flexGrow={1} flexShrink={1} px="5" justifyContent="center">
-      <Text flexShrink={1} numberOfLines={1} fontSize="md" adjustsFontSizeToFit>
-        {name}
-      </Text>
-      <Text fontSize="xs" color="gray.500">
-        {symbol}
-      </Text>
-    </Box>
-    <Box alignItems="flex-end" justifyContent="center">
-      <Text bold>
-        {Number(price_usd).toLocaleString('en-US', {
-          style: 'currency',
-          currency: 'USD',
-          maximumFractionDigits: 6,
-        })}
-      </Text>
-      <Text
-        color={percent_change_24h.startsWith('-') ? 'red.600' : 'green.700'}
+}: Props) => {
+  const navigation = useNavigation();
+  const percentChange24 = Number(percent_change_24h) / 100;
+  const handlePress = () => {
+    navigation.navigate('CoinDetails', { coinId: id });
+  };
+  return (
+    <TouchableOpacity onPress={handlePress}>
+      <Row
+        justifyContent="space-evenly"
+        alignItems="center"
+        py="2"
+        px="6"
+        height={60}
+        pointerEvents="none"
       >
-        {Number(parseFloat(percent_change_24h) / 100).toLocaleString('en-US', {
-          style: 'percent',
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 2,
-        })}
-      </Text>
-    </Box>
-  </Row>
-);
+        <FastImage
+          style={[
+            styles.coinImg,
+            { backgroundColor: useColorModeValue(undefined, 'lightgrey') },
+          ]}
+          source={{
+            uri: getCoinImgUrl(nameid),
+          }}
+          resizeMode={FastImage.resizeMode.contain}
+        />
+        <Box flexGrow={1} flexShrink={1} px="5" justifyContent="center">
+          <Text
+            flexShrink={1}
+            numberOfLines={1}
+            fontSize="md"
+            adjustsFontSizeToFit
+          >
+            {name}
+          </Text>
+          <Text fontSize="xs" color="gray.500">
+            {symbol}
+          </Text>
+        </Box>
+        <Box alignItems="flex-end" justifyContent="center">
+          <Text bold>
+            {Number(price_usd).toLocaleString('en-US', {
+              style: 'currency',
+              currency: 'USD',
+              maximumFractionDigits: 6,
+            })}
+          </Text>
+          <Text color={percentChange24 < 0 ? 'red.600' : 'green.700'}>
+            {percentChange24.toLocaleString('en-US', {
+              style: 'percent',
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            })}
+          </Text>
+        </Box>
+      </Row>
+    </TouchableOpacity>
+  );
+};
 
 export default React.memo(
   CoinItem,

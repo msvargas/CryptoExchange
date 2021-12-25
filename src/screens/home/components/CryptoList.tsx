@@ -48,7 +48,7 @@ function CryptoList() {
       } catch (error) {
         console.error(error);
       }
-    }, 1000),
+    }, 2000),
     [dispatch, getAllCoins],
   );
 

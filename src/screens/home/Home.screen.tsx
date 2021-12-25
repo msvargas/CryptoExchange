@@ -12,7 +12,7 @@ function HomeScreen() {
 
   useFocusEffect(
     useCallback(() => {
-      dispatch(fetchAllCoins({ limit: 'all', start: 0 }));
+      dispatch(fetchAllCoins({ start: 0, limit: 'all' }));
     }, [dispatch]),
   );
 
@@ -24,4 +24,4 @@ function HomeScreen() {
   );
 }
 
-export default React.memo(HomeScreen);
+export default HomeScreen;
