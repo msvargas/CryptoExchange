@@ -1,4 +1,4 @@
-package com.cryptoexchange;
+package com.cryptoprice;
 
 import com.facebook.react.ReactActivity;
 import android.os.Bundle;
@@ -16,7 +16,7 @@ public class MainActivity extends ReactActivity {
    */
   @Override
   protected String getMainComponentName() {
-    return "CryptoExchange";
+    return "CryptoPrice";
   }
 
   @Override

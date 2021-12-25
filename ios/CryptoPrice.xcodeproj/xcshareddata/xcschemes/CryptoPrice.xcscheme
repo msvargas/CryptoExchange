@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-               BuildableName = "CryptoExchange.app"
-               BlueprintName = "CryptoExchange"
-               ReferencedContainer = "container:CryptoExchange.xcodeproj">
+               BuildableName = "CryptoPrice.app"
+               BlueprintName = "CryptoPrice"
+               ReferencedContainer = "container:CryptoPrice.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -33,9 +33,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "00E356ED1AD99517003FC87E"
-               BuildableName = "CryptoExchangeTests.xctest"
-               BlueprintName = "CryptoExchangeTests"
-               ReferencedContainer = "container:CryptoExchange.xcodeproj">
+               BuildableName = "CryptoPriceTests.xctest"
+               BlueprintName = "CryptoPriceTests"
+               ReferencedContainer = "container:CryptoPrice.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -55,9 +55,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "CryptoExchange.app"
-            BlueprintName = "CryptoExchange"
-            ReferencedContainer = "container:CryptoExchange.xcodeproj">
+            BuildableName = "CryptoPrice.app"
+            BlueprintName = "CryptoPrice"
+            ReferencedContainer = "container:CryptoPrice.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -72,9 +72,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "13B07F861A680F5B00A75B9A"
-            BuildableName = "CryptoExchange.app"
-            BlueprintName = "CryptoExchange"
-            ReferencedContainer = "container:CryptoExchange.xcodeproj">
+            BuildableName = "CryptoPrice.app"
+            BlueprintName = "CryptoPrice"
+            ReferencedContainer = "container:CryptoPrice.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

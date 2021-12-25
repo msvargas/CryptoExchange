@@ -1,4 +1,4 @@
-package com.cryptoexchange;
+package com.cryptoprice;
 
 import com.facebook.react.bridge.JSIModuleSpec;
 import com.facebook.react.bridge.JavaScriptContextHolder;
