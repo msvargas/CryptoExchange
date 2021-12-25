@@ -44,7 +44,6 @@ function Header() {
         _dark={{
           backgroundColor: 'muted.800',
         }}
-        shadow="1"
         safeAreaTop
       >
         <IconButton
