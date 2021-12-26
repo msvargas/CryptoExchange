@@ -1,6 +1,6 @@
 # Crypto Price App
 
-![Demo](screenshots/demo.gif)
+<img src="screenshots/demo.gif" alt="Demo gif" width="250"/>
 
 If you want to run the project from the repo,
 
