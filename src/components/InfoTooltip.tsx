@@ -19,6 +19,7 @@ export default function InfoTooltip({ label, ...rest }: Props) {
           {...triggerProps}
           icon={<Icon as={Feather} name="info" size={3} />}
           size={3}
+          hitSlop={16}
         />
       )}
       {...rest}
