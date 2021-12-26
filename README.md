@@ -1,6 +1,6 @@
 # Crypto Price App
 
-![Image](screenshots/home.png){ width="800" height="600" style="display: block; margin: 0 auto" }
+![Demo](screenshots/demo.gif)
 
 If you want to run the project from the repo,
 
@@ -10,12 +10,19 @@ If you want to run the project from the repo,
 
 ## Another commands
 
+- Run `yarn ios:prod` to build the app for production and run it on iOS devices
+- Run `yarn compile` to check typescript errors
 - Run `yarn start` to start the packager
-- Run `yarn clean` to clean the project
+- Run `yarn clean` to clean the project with react-native-clean-project
 - Run `yarn test` to run the tests
 - Run `yarn lint` to run the linter
+- Run `yarn xcode` to open the project in Xcode
 
-## Description
+# Works on iOS and Android
+
+![Image](screenshots/home.png)
+
+# Resources
 
 ## Path aliases from the root of the project with babel and typescript:
 
