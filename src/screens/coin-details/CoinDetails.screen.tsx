@@ -145,7 +145,7 @@ const BasicExample = ({
               icon={<Icon as={Feather} name="arrow-left-circle" size={8} />}
               onPress={navigation.goBack}
             />
-            <Heading>{coin.symbol}</Heading>
+            <Heading style={{ color: vibrantColor }}>{coin.symbol}</Heading>
           </Row>
           <Text color="darkBlue.600">
             <Text bold>Rank:</Text> <Text>#{coin.rank}</Text>
@@ -257,22 +257,35 @@ const BasicExample = ({
                       style: 'decimal',
                       maximumFractionDigits: 0,
                     })}{' '}
-                    {coin.symbol}
+                    {coin.symbol}'s
                   </Text>
                 </Text>
               </VStack>
             </HStack>
-            <HStack justifyContent="space-between" alignItems="center">
+            <HStack justifyContent="space-between">
               <VStack>
                 <Text bold>Circulating Supply</Text>
-                <Text color="gray.500">{formatCurrency(coin.csupply)}</Text>
+                <Text color="gray.500">
+                  {Number(coin.csupply).toLocaleString('en-US', {
+                    style: 'decimal',
+                  })}{' '}
+                  {coin.symbol}
+                </Text>
               </VStack>
               <VStack alignItems="flex-end">
                 <Text bold>Total Supply</Text>
-                <Text color="gray.500">
+                <Text color="gray.500" textAlign="right">
                   {Number(coin.tsupply).toLocaleString('en-US', {
                     style: 'decimal',
                   })}
+                  {'\n'}{' '}
+                  <Text fontSize="xs">
+                    MAX:
+                    {Number(coin.msupply).toLocaleString('en-US', {
+                      style: 'decimal',
+                      maximumFractionDigits: 0,
+                    })}
+                  </Text>
                 </Text>
               </VStack>
             </HStack>
