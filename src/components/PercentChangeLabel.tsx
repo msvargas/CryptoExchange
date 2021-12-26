@@ -2,7 +2,7 @@ import React from 'react';
 import { Icon, ITextProps, Row, Text } from 'native-base';
 import Feather from 'react-native-vector-icons/Feather';
 
-import { formatPercent } from '~utils/helpers';
+import { formatter } from '~utils/helpers';
 
 type Props = ITextProps & {
   children?: React.ReactText;
@@ -21,7 +21,7 @@ function PercentChangeLabel({ children, options, ...rest }: Props) {
         color={color}
       />
       <Text color={color} {...rest}>
-        {formatPercent(percentChange, options)}
+        {formatter.formatPercent(percentChange, options)}
       </Text>
     </Row>
   );

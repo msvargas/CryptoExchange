@@ -3,7 +3,7 @@ import { ColorMode, extendTheme, StorageManager } from 'native-base';
 
 import StorageService from '~services/Storage.service';
 
-export const APP_COLOR_MODE_KEY = '@app-color-mode';
+const APP_COLOR_MODE_KEY = '@app-color-mode';
 
 const colors = {
   primary: {
@@ -23,25 +23,30 @@ const colors = {
   },
 };
 
-export const colorModeManager: StorageManager = {
-  get: async () => {
+class ColorStorageManager implements StorageManager {
+  constructor(public key: string = APP_COLOR_MODE_KEY) {}
+
+  async get() {
     try {
-      const val = await StorageService.getStringAsync(APP_COLOR_MODE_KEY);
+      const val = await StorageService.getStringAsync(this.key);
 
       return val === 'dark' ? val : 'light';
     } catch (error) {
       console.error(error);
       return Appearance.getColorScheme() as ColorMode;
     }
-  },
-  set: async (value: ColorMode) => {
+  }
+
+  async set(value: ColorMode) {
     try {
-      await StorageService.setStringAsync(APP_COLOR_MODE_KEY, value as string);
+      await StorageService.setStringAsync(this.key, value as string);
     } catch (error) {
       console.error(error);
     }
-  },
-};
+  }
+}
+
+export const colorModeManager = new ColorStorageManager();
 
 const theme = extendTheme({ colors });
 

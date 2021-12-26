@@ -13,7 +13,7 @@ import {
 import { useFocusEffect } from '@react-navigation/native';
 import color from 'color';
 
-import { getCoinChart } from '~services/Api.service';
+import ApiService from '~services/Api.service';
 import { useAppDispatch, useAppSelector } from '~store/hooks';
 import { selectCoinById } from '~store/slices/coins.slice';
 import { fetchCoinDetails } from '~store/thunks/crypto.thunk';
@@ -51,6 +51,7 @@ const CoinDetailsScreen = ({
       isMounted.current = false;
     };
   }, []);
+
   useFocusEffect(
     useCallback(() => {
       if (!coinId || !coin) {
@@ -93,7 +94,7 @@ const CoinDetailsScreen = ({
             }
           }),
         dispatch(fetchCoinDetails(coinId)).unwrap(),
-        getCoinChart(coinId).then(result => {
+        ApiService.getCoinChart(coinId).then(result => {
           if (result.success) {
             const data = result.data.price;
             const interpolatedData = interpolator({

@@ -1,8 +1,8 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-import { getAllCoins, getCoinDetails } from '~services/Api.service';
-import { CoinsData } from '~services/types';
+import ApiService from '~services/Api.service';
 
+import type { CoinsData } from '~services/types';
 import type { RootState } from '~store';
 
 export const fetchAllCoins = createAsyncThunk(
@@ -17,7 +17,7 @@ export const fetchAllCoins = createAsyncThunk(
 
     const result = await Promise.all(
       [...new Array(isValidQueryAll ? ids.length / 100 : 1)].map((_, i) =>
-        getAllCoins({
+        ApiService.getAllCoins({
           limit: 100,
           start: isValidQueryAll ? i * 100 : start,
         }),
@@ -59,7 +59,7 @@ export const fetchAllCoins = createAsyncThunk(
 export const fetchCoinDetails = createAsyncThunk(
   'coins/fetchCoinDetails',
   async (coinId: string) => {
-    const result = await getCoinDetails(coinId);
+    const result = await ApiService.getCoinDetails(coinId);
     return result;
   },
 );

@@ -2,7 +2,7 @@ import React from 'react';
 import { Divider, HStack, Row, Text, VStack } from 'native-base';
 
 import InfoTooltip from '~components/InfoTooltip';
-import { formatCurrency } from '~utils/helpers';
+import { formatter } from '~utils/helpers';
 
 import type { CoinState } from '~store/slices/coins.slice';
 
@@ -21,12 +21,14 @@ const CoinBasicDetails = ({ coin }: Props) => (
             crossOffset={20}
           />
         </Row>
-        <Text color="gray.500">{formatCurrency(coin.market_cap_usd)}</Text>
+        <Text color="gray.500">
+          {formatter.formatCurrency(coin.market_cap_usd)}
+        </Text>
       </VStack>
       <VStack alignItems="flex-end">
         <Text bold>24h Volume</Text>
         <Text color="gray.500" textAlign="right">
-          {formatCurrency(coin.volume24)}
+          {formatter.formatCurrency(coin.volume24)}
           {'\n'}{' '}
           <Text fontSize="xs">
             {Number(coin.volume24_native).toLocaleString('en-US', {
@@ -45,10 +47,7 @@ const CoinBasicDetails = ({ coin }: Props) => (
           <InfoTooltip label="Circulating supply - the number of coins or tokens that's been mined/created—the approximate number currently in public hands and circulating in the market." />
         </Row>
         <Text color="gray.500">
-          {Number(coin.csupply).toLocaleString('en-US', {
-            style: 'decimal',
-          })}{' '}
-          {coin.symbol}
+          {formatter.formatDecimal(coin.csupply)} {coin.symbol}
         </Text>
       </VStack>
       <VStack alignItems="flex-end">
@@ -57,13 +56,11 @@ const CoinBasicDetails = ({ coin }: Props) => (
           <InfoTooltip label="Total supply - total number of coins that is currently in existence however not all are circulating. Max Supply - Maximum number of coins that will ever exist" />
         </Row>
         <Text color="gray.500" textAlign="right">
-          {Number(coin.tsupply).toLocaleString('en-US', {
-            style: 'decimal',
-          })}
+          {formatter.formatDecimal(coin.tsupply)}
           {'\n'}{' '}
           <Text fontSize="xs">
-            MAX:
-            {Number(coin.msupply).toLocaleString('en-US', {
+            MAX:{' '}
+            {formatter.formatDecimal(coin.msupply, {
               style: 'decimal',
               maximumFractionDigits: 0,
             })}

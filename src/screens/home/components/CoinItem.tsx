@@ -5,7 +5,7 @@ import FastImage from 'react-native-fast-image';
 import { useNavigation } from '@react-navigation/native';
 
 import PercentChangeLabel from '~components/PercentChangeLabel';
-import { formatCurrency, getCoinImgUrl } from '~utils/helpers';
+import { formatter, getCoinImgUrl } from '~utils/helpers';
 
 import type { CoinsData } from '~services/types';
 
@@ -59,7 +59,7 @@ const CoinItem = ({
           </Text>
         </Box>
         <Box alignItems="flex-end" justifyContent="center">
-          <Text bold>{formatCurrency(price_usd)}</Text>
+          <Text bold>{formatter.formatCurrency(price_usd)}</Text>
           <PercentChangeLabel>{percentChange}</PercentChangeLabel>
         </Box>
       </Row>
