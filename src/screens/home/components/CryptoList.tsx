@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { memo, useCallback, useState } from 'react';
 import { FlatList, ListRenderItem, StyleSheet } from 'react-native';
 import { Divider, useColorModeValue } from 'native-base';
 import { useDrawerStatus } from '@react-navigation/drawer';
@@ -21,7 +21,7 @@ const renderCoinItem: ListRenderItem<CoinsData> = ({ item }) => (
 function CryptoList() {
   const dispatch = useAppDispatch();
   const coins = useAppSelector(selectCoinList);
-  const [refreshing, setRefreshing] = React.useState(false);
+  const [refreshing, setRefreshing] = useState(false);
   const isDrawerOpen = useDrawerStatus() === 'open';
   const indicatorStyle = useColorModeValue(undefined, 'white');
 
@@ -48,8 +48,8 @@ function CryptoList() {
       } catch (error) {
         console.error(error);
       }
-    }, 2000),
-    [dispatch, getAllCoins],
+    }, 1000),
+    [dispatch],
   );
 
   const handleRefresh = useCallback(async () => {
@@ -83,7 +83,7 @@ function CryptoList() {
   );
 }
 
-export default React.memo(CryptoList);
+export default memo(CryptoList);
 
 const styles = StyleSheet.create({
   list: {

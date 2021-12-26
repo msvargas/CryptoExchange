@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
   Box,
   ScrollView,
@@ -10,6 +10,7 @@ import {
   monotoneCubicInterpolation as interpolator,
   Point,
 } from '@rainbow-me/animated-charts';
+import { useFocusEffect } from '@react-navigation/native';
 import color from 'color';
 
 import { getCoinChart } from '~services/Api.service';
@@ -36,68 +37,81 @@ const CoinDetailsScreen = ({
   },
   navigation,
 }: CoinDetailsNavigationProp) => {
-  const [points, setPoints] = React.useState<Point[]>([]);
+  const [points, setPoints] = useState<Point[]>([]);
   const initialVibrantColor = useColorModeValue('#000000', '#D3D3D3');
-  const [vibrantColor, setVibrantColor] = React.useState(initialVibrantColor);
+  const [vibrantColor, setVibrantColor] = useState(initialVibrantColor);
   const contranstVibrantColor = useContrastText(initialVibrantColor);
-  const [isLoading, setIsLoading] = React.useState(true);
+  const [isLoading, setIsLoading] = useState(true);
   const coin = useAppSelector(state => selectCoinById(state, coinId));
   const dispatch = useAppDispatch();
+  const isMounted = useRef(true);
 
-  React.useEffect(() => {
-    if (!coinId || !coin) {
-      return;
-    }
-    let strokeColor: string | undefined;
-    Promise.all([
-      ImageColors.getColors(getCoinImgUrl(coin.nameid, true), {
-        key: coin.nameid,
-        cache: true,
-        fallback: '#000',
-      })
-        .then(colors => {
-          switch (colors.platform) {
-            case 'ios':
-              if (colors.primary !== '#FFFFFF') {
-                strokeColor = colors.primary;
-              } else {
-                strokeColor = colors.secondary;
-              }
-              break;
-            case 'android':
-              strokeColor = colors.vibrant;
-              break;
-          }
+  useEffect(() => {
+    return () => {
+      isMounted.current = false;
+    };
+  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      if (!coinId || !coin) {
+        return;
+      }
+      let strokeColor: string | undefined;
+      Promise.all([
+        ImageColors.getColors(getCoinImgUrl(coin.nameid, true), {
+          key: coin.nameid,
+          cache: true,
+          fallback: '#000',
         })
-        .catch(e => {
-          console.error(e);
-        })
-        .finally(() => {
-          if (strokeColor === contranstVibrantColor) {
-            strokeColor = initialVibrantColor;
-          }
-          let coinPrimaryColor = color(strokeColor || initialVibrantColor);
-          if (coinPrimaryColor.isLight()) {
-            coinPrimaryColor = coinPrimaryColor.darken(0.2);
-          }
-          setVibrantColor(coinPrimaryColor.hex());
-        }),
-      dispatch(fetchCoinDetails(coinId)).unwrap(),
-      getCoinChart(coinId).then(result => {
-        if (result.success) {
-          const data = result.data.price;
-          setPoints(
-            interpolator({
+          .then(colors => {
+            switch (colors.platform) {
+              case 'ios':
+                if (colors.primary !== '#FFFFFF') {
+                  strokeColor = colors.primary;
+                } else {
+                  strokeColor = colors.background;
+                }
+                break;
+              case 'android':
+                strokeColor = colors.vibrant;
+                break;
+            }
+          })
+          .catch(e => {
+            console.error(e);
+          })
+          .finally(() => {
+            if (strokeColor === contranstVibrantColor) {
+              strokeColor = initialVibrantColor;
+            }
+            let coinPrimaryColor = color(strokeColor || initialVibrantColor);
+            if (coinPrimaryColor.isLight()) {
+              coinPrimaryColor = coinPrimaryColor.darken(0.2);
+            }
+            if (isMounted.current) {
+              setVibrantColor(coinPrimaryColor.hex());
+            }
+          }),
+        dispatch(fetchCoinDetails(coinId)).unwrap(),
+        getCoinChart(coinId).then(result => {
+          if (result.success) {
+            const data = result.data.price;
+            const interpolatedData = interpolator({
               data,
               range: 200,
-            }),
-          );
-        }
-        setIsLoading(false);
-      }),
-    ]);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [coinId]);
+            });
+            if (isMounted.current) {
+              setPoints(interpolatedData);
+            }
+          }
+          if (isMounted.current) {
+            setIsLoading(false);
+          }
+        }),
+      ]);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [coinId]),
+  );
 
   if (!coin) {
     navigation.goBack();

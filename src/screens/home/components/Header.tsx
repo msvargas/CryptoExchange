@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useRef } from 'react';
 import { Dimensions, StyleSheet, TextInput } from 'react-native';
 import { Box, Heading, Icon, IconButton, Row } from 'native-base';
 import Animated, {
@@ -17,7 +17,7 @@ import { setSearch } from '~store/slices/coins.slice';
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 
 function Header() {
-  const searchInputRef = React.useRef<TextInput>(null);
+  const searchInputRef = useRef<TextInput>(null);
   const navigation = useNavigation<DrawerNavigationProp<{}>>();
   const dispatch = useAppDispatch();
   const offset = useSharedValue(0);

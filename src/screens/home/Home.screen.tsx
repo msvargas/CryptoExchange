@@ -1,5 +1,4 @@
-import React, { useCallback } from 'react';
-import { useFocusEffect } from '@react-navigation/native';
+import React, { useEffect } from 'react';
 
 import { useAppDispatch } from '~store/hooks';
 import { fetchAllCoins } from '~store/thunks/crypto.thunk';
@@ -10,11 +9,9 @@ import Header from './components/Header';
 function HomeScreen() {
   const dispatch = useAppDispatch();
 
-  useFocusEffect(
-    useCallback(() => {
-      dispatch(fetchAllCoins({ start: 0, limit: 'all' }));
-    }, [dispatch]),
-  );
+  useEffect(() => {
+    dispatch(fetchAllCoins({ start: 0, limit: 'all' }));
+  }, [dispatch]);
 
   return (
     <>

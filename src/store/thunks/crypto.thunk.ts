@@ -13,7 +13,8 @@ export const fetchAllCoins = createAsyncThunk(
   ) => {
     const state = getState() as RootState;
     const { start, ids } = state.coins;
-    const isValidQueryAll = params?.limit === 'all' && ids.length;
+    const isValidQueryAll = params?.limit === 'all' && ids.length > 0;
+
     const result = await Promise.all(
       [...new Array(isValidQueryAll ? ids.length / 100 : 1)].map((_, i) =>
         getAllCoins({

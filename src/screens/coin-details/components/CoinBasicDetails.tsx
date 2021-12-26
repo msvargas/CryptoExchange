@@ -1,6 +1,7 @@
 import React from 'react';
-import { Divider, HStack, Text, VStack } from 'native-base';
+import { Divider, HStack, Row, Text, VStack } from 'native-base';
 
+import InfoTooltip from '~components/InfoTooltip';
 import { formatCurrency } from '~utils/helpers';
 
 import type { CoinState } from '~store/slices/coins.slice';
@@ -13,7 +14,13 @@ const CoinBasicDetails = ({ coin }: Props) => (
   <VStack space={3} divider={<Divider />} mx="3" mt="5">
     <HStack justifyContent="space-between" alignItems="flex-start">
       <VStack>
-        <Text bold>Market Cap</Text>
+        <Row alignItems="center">
+          <Text bold>Market Cap </Text>
+          <InfoTooltip
+            label="Market Cap is equal to the circulation supply multiplied by the price of cryptocurrency Market Cap = Circulation Coins * Current Coin Price."
+            crossOffset={20}
+          />
+        </Row>
         <Text color="gray.500">{formatCurrency(coin.market_cap_usd)}</Text>
       </VStack>
       <VStack alignItems="flex-end">
@@ -33,7 +40,10 @@ const CoinBasicDetails = ({ coin }: Props) => (
     </HStack>
     <HStack justifyContent="space-between">
       <VStack>
-        <Text bold>Circulating Supply</Text>
+        <Row alignItems="center">
+          <Text bold>Circulating Supply </Text>
+          <InfoTooltip label="Circulating supply - the number of coins or tokens that's been mined/created—the approximate number currently in public hands and circulating in the market." />
+        </Row>
         <Text color="gray.500">
           {Number(coin.csupply).toLocaleString('en-US', {
             style: 'decimal',
@@ -42,7 +52,10 @@ const CoinBasicDetails = ({ coin }: Props) => (
         </Text>
       </VStack>
       <VStack alignItems="flex-end">
-        <Text bold>Total Supply</Text>
+        <Row alignItems="center">
+          <Text bold>Total Supply </Text>
+          <InfoTooltip label="Total supply - total number of coins that is currently in existence however not all are circulating. Max Supply - Maximum number of coins that will ever exist" />
+        </Row>
         <Text color="gray.500" textAlign="right">
           {Number(coin.tsupply).toLocaleString('en-US', {
             style: 'decimal',
