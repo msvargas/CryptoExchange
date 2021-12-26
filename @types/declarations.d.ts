@@ -14,7 +14,7 @@ declare module '@rainbow-me/animated-charts' {
     /**  
     @description reanimated worklet
     **/
-    format: (value: unknown) => string;
+    format: (value: string) => string;
   };
   export type ChartData = {
     points: Array<Point>;

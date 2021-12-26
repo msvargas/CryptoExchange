@@ -9,10 +9,12 @@ import deburr from 'lodash/deburr';
 
 import { fetchAllCoins, fetchCoinDetails } from '~store/thunks/crypto.thunk';
 
-import type { CoinsData } from '~services/types';
+import type { CoinDetails, CoinsData } from '~services/types';
 import type { RootState } from '../store';
 
-const coinsAdapter = createEntityAdapter<CoinsData>();
+type CoinState = CoinsData & Partial<CoinDetails>;
+
+const coinsAdapter = createEntityAdapter<CoinState>();
 
 export const coinsSlice = createSlice({
   name: 'coins',
@@ -43,7 +45,7 @@ export const coinsSlice = createSlice({
         if (response.success) {
           state.numCoins = response.data.numCoins;
           state.time = response.data.time;
-          coinsAdapter.upsertMany(state, response.data.coins);
+          coinsAdapter.upsertMany(state, response.data.coins as CoinState[]);
         }
         state.status = 'idle';
       })
@@ -52,7 +54,7 @@ export const coinsSlice = createSlice({
         if (response.success) {
           coinsAdapter.updateOne(state, {
             id: response.data.id,
-            changes: response.data as unknown as CoinsData,
+            changes: response.data as CoinState,
           });
         }
       });

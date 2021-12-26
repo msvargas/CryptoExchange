@@ -19,7 +19,7 @@ const CoinItem = ({
   percent_change_24h,
 }: Props) => {
   const navigation = useNavigation();
-  const percentChange24 = Number(percent_change_24h) / 100;
+  const percentChange = Number(percent_change_24h) / 100;
   const handlePress = () => {
     navigation.navigate('CoinDetails', { coinId: id });
   };
@@ -64,8 +64,8 @@ const CoinItem = ({
               maximumFractionDigits: 6,
             })}
           </Text>
-          <Text color={percentChange24 < 0 ? 'red.600' : 'green.700'}>
-            {percentChange24.toLocaleString('en-US', {
+          <Text color={percentChange < 0 ? 'red.600' : 'green.700'}>
+            {percentChange.toLocaleString('en-US', {
               style: 'percent',
               minimumFractionDigits: 2,
               maximumFractionDigits: 2,
