@@ -7,6 +7,7 @@ import {
 } from 'react-native-dotenv';
 
 const config = {
+  locale: 'en-US',
   apiBaseUrl: API_BASE_URL,
   chartBaseUrl: CHART_BASE_URL,
   author: AUTHOR_NAME,

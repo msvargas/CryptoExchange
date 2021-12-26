@@ -12,7 +12,7 @@ import { fetchAllCoins, fetchCoinDetails } from '~store/thunks/crypto.thunk';
 import type { CoinDetails, CoinsData } from '~services/types';
 import type { RootState } from '../store';
 
-type CoinState = CoinsData & Partial<CoinDetails>;
+export type CoinState = CoinsData & Partial<CoinDetails>;
 
 const coinsAdapter = createEntityAdapter<CoinState>();
 

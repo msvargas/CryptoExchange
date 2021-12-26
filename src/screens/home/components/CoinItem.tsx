@@ -4,7 +4,8 @@ import { Box, Row, Text, useColorModeValue } from 'native-base';
 import FastImage from 'react-native-fast-image';
 import { useNavigation } from '@react-navigation/native';
 
-import { getCoinImgUrl } from '~utils/helpers';
+import PercentChangeLabel from '~components/PercentChangeLabel';
+import { formatCurrency, getCoinImgUrl } from '~utils/helpers';
 
 import type { CoinsData } from '~services/types';
 
@@ -19,10 +20,11 @@ const CoinItem = ({
   percent_change_24h,
 }: Props) => {
   const navigation = useNavigation();
-  const percentChange = Number(percent_change_24h) / 100;
+  const percentChange = Number(percent_change_24h);
   const handlePress = () => {
     navigation.navigate('CoinDetails', { coinId: id });
   };
+
   return (
     <TouchableOpacity onPress={handlePress}>
       <Row
@@ -57,20 +59,8 @@ const CoinItem = ({
           </Text>
         </Box>
         <Box alignItems="flex-end" justifyContent="center">
-          <Text bold>
-            {Number(price_usd).toLocaleString('en-US', {
-              style: 'currency',
-              currency: 'USD',
-              maximumFractionDigits: 6,
-            })}
-          </Text>
-          <Text color={percentChange < 0 ? 'red.600' : 'green.700'}>
-            {percentChange.toLocaleString('en-US', {
-              style: 'percent',
-              minimumFractionDigits: 2,
-              maximumFractionDigits: 2,
-            })}
-          </Text>
+          <Text bold>{formatCurrency(price_usd)}</Text>
+          <PercentChangeLabel>{percentChange}</PercentChangeLabel>
         </Box>
       </Row>
     </TouchableOpacity>
