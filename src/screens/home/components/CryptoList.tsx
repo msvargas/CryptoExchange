@@ -1,6 +1,6 @@
 import React, { memo, useCallback, useState } from 'react';
 import { FlatList, ListRenderItem, StyleSheet } from 'react-native';
-import { Divider, useColorModeValue } from 'native-base';
+import { Divider } from 'native-base';
 import { useDrawerStatus } from '@react-navigation/drawer';
 import throttle from 'lodash/throttle';
 
@@ -23,7 +23,6 @@ function CryptoList() {
   const coins = useAppSelector(selectCoinList);
   const [refreshing, setRefreshing] = useState(false);
   const isDrawerOpen = useDrawerStatus() === 'open';
-  const indicatorStyle = useColorModeValue(undefined, 'white');
 
   const windowSize = coins.length > 100 ? Math.floor(coins.length / 6) : 21;
 
@@ -66,13 +65,13 @@ function CryptoList() {
       renderItem={renderCoinItem}
       ItemSeparatorComponent={Divider}
       ListFooterComponent={Footer}
-      indicatorStyle={indicatorStyle}
       onEndReached={fetchMoreCoins}
       onEndReachedThreshold={0.5}
       initialNumToRender={15}
       maxToRenderPerBatch={isDrawerOpen ? 10 : windowSize}
       windowSize={isDrawerOpen ? 21 : windowSize}
       removeClippedSubviews={true}
+      showsVerticalScrollIndicator={false}
       refreshControl={
         <RefreshControlColorMode
           refreshing={refreshing}

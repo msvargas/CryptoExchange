@@ -15,4 +15,4 @@ const config = {
   githubProfileUrl: GITHUB_PROFILE_URL,
 };
 
-export default config;
+export default Object.freeze(config);

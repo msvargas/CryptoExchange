@@ -21,6 +21,7 @@ import {
 } from '@rainbow-me/animated-charts';
 
 import PercentChangeLabel from '~components/PercentChangeLabel';
+import config from '~config';
 import { getCoinImgUrl } from '~utils/helpers';
 
 type Props = {
@@ -58,13 +59,11 @@ const CoinChart = ({
   const formatPrice = (value: string | number) => {
     'worklet';
     const price = Number(value || latestCurrentPrice.value);
-    return Number(
-      latestCurrentPrice.value > 10 ? price.toFixed(2) : price,
-    ).toLocaleString('en-US', {
+    return price.toLocaleString(config.locale, {
       style: 'currency',
       currency: 'USD',
       minimumFractionDigits: 2,
-      maximumFractionDigits: 6,
+      maximumFractionDigits: latestCurrentPrice.value > 10 ? 2 : 6,
     });
   };
 
@@ -118,13 +117,14 @@ const CoinChart = ({
             left={0}
             right={0}
             justifyContent="center"
-            alignItems={'center'}
+            alignItems="center"
+            pointerEvents="none"
           >
             <Spinner />
           </Box>
         )}
       </Box>
-      <Divider style={styles.divider} />
+      <Divider style={styles.divider} pointerEvents="none" />
     </ChartPathProvider>
   );
 };

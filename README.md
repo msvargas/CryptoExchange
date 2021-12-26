@@ -1,5 +1,7 @@
 # Crypto Price App
 
+![Image](screenshots/home.png){ width="800" height="600" style="display: block; margin: 0 auto" }
+
 If you want to run the project from the repo,
 
 - Clone the repository and run yarn in the project root

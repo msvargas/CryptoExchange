@@ -1,5 +1,7 @@
 # TODO
 
+Pending tasks for the project:
+
 [x] Setup react native project
 [x] Add path aliases with babel and ts
 [x] Add eslint rules
@@ -18,5 +20,6 @@
 [X] Implement search bar
 [X] Add pull-to-refresh to update data
 [x] Add infinite scroll to load more data
-[] Implement UI for crypt currency details
+[x] Implement UI for crypt currency details
+[x] Implement crypto chart
 [x] Enable hermes on Android for better performance
