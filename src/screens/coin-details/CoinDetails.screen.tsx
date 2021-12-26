@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { Dimensions, StyleSheet } from 'react-native';
 import {
+  Badge,
   Box,
   Divider,
   Heading,
@@ -12,6 +13,7 @@ import {
   Spinner,
   Text,
   useColorModeValue,
+  useContrastText,
   VStack,
 } from 'native-base';
 import FastImage from 'react-native-fast-image';
@@ -51,13 +53,15 @@ const BasicExample = ({
   navigation,
 }: CoinDetailsNavigationProp) => {
   const [points, setPoints] = React.useState<Point[]>([]);
-  const [vibrantColor, setVibrantColor] = React.useState('#fff');
+  const initialVibrantColor = useColorModeValue('#000000', '#D3D3D3');
+  const contranstVibrantColor = useContrastText(initialVibrantColor);
+  const [vibrantColor, setVibrantColor] = React.useState(initialVibrantColor);
   const [isLoading, setIsLoading] = React.useState(true);
   const coin = useAppSelector(state => selectCoinById(state, coinId));
   const dispatch = useAppDispatch();
   const strokeWidth = Math.max(StyleSheet.hairlineWidth, 3);
   const latestCurrentPrice = useSharedValue(Number(coin?.price_usd || 0));
-  const bgColorImg = useColorModeValue(undefined, 'lightgrey');
+  const bgColorImg = useColorModeValue('black', 'lightgrey');
 
   React.useEffect(() => {
     if (!coinId || !coin) {
@@ -89,10 +93,10 @@ const BasicExample = ({
           console.error(e);
         })
         .finally(() => {
-          if (strokeColor === '#FFFFFF') {
-            strokeColor = '#000';
+          if (strokeColor === contranstVibrantColor) {
+            strokeColor = initialVibrantColor;
           }
-          let coinPrimaryColor = color(strokeColor || '#000');
+          let coinPrimaryColor = color(strokeColor || initialVibrantColor);
           if (coinPrimaryColor.isLight()) {
             coinPrimaryColor = coinPrimaryColor.darken(0.2);
           }
@@ -147,9 +151,11 @@ const BasicExample = ({
             />
             <Heading style={{ color: vibrantColor }}>{coin.symbol}</Heading>
           </Row>
-          <Text color="darkBlue.600">
-            <Text bold>Rank:</Text> <Text>#{coin.rank}</Text>
-          </Text>
+          <Badge style={{ backgroundColor: vibrantColor }} borderRadius="md">
+            <Text color="white" bold>
+              Rank #{coin.rank}
+            </Text>
+          </Badge>
         </Row>
         <ScrollView showsVerticalScrollIndicator={false}>
           <Box px="4">
