@@ -5,6 +5,7 @@ import StorageService from '~services/Storage.service';
 
 const APP_COLOR_MODE_KEY = '@app-color-mode';
 
+// palette colors
 const colors = {
   primary: {
     50: '#EEF2F6',
@@ -46,6 +47,7 @@ class ColorStorageManager implements StorageManager {
   }
 }
 
+// create instance for store prefered color mode
 export const colorModeManager = new ColorStorageManager();
 
 const theme = extendTheme({ colors });

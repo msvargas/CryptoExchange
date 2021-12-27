@@ -27,6 +27,7 @@ export const coinsSlice = createSlice({
   }),
   reducers: {
     loadMoreCoins: state => {
+      // increment start variable to load more coins
       if (
         state.status === 'idle' &&
         state.start + state.ids.length <= state.numCoins
@@ -35,6 +36,7 @@ export const coinsSlice = createSlice({
       }
     },
     setSearch: (state, action: PayloadAction<string>) => {
+      // update search variable to filter coins
       state.search = action.payload;
     },
   },
@@ -91,10 +93,12 @@ export const selectIsUnitializedCoins = createDraftSafeSelector(
   selectCoinsStatus,
   status => status === undefined,
 );
+
 export const selectIsLoadingCoins = createDraftSafeSelector(
   selectCoinsStatus,
   status => status === 'loading',
 );
+
 export const selectIsIdleCoins = createDraftSafeSelector(
   selectCoinsStatus,
   status => status === 'idle',

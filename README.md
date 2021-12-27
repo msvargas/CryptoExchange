@@ -21,6 +21,7 @@ A cryptocurrency price tracker which gets the cryptocurrencies from the [CoinLor
 - Bootsplash screen for better UX
 - React Navigation and React Native Screens
 - Redux store
+- more ...
 
 ## Setup
 
@@ -28,18 +29,18 @@ If you want to run the project from the repo:
 
 1. Clone the repository `git clone https://github.com/msvargas/CryptoExchange.git`
 2. Run `yarn install`
-3. Run `yarn ios` to run the app on iOS devices (this script trigger automatically `pod install` with script preios)
+3. Run `yarn ios` for development or `yarn ios:prod` to run app in release mode on iOS devices (this script trigger automatically `pod install` with script preios)
 4. Run `yarn android` to run the app on Android devices
 
 # Scripts
 
 - Run `yarn start` to start the packager
-- Run `yarn clean` to clean the project with react-native-clean-project
+- Run `yarn clean` to clean the project to solved some conflicts on build process - [react-native-clean-project](https://www.npmjs.com/package/react-native-clean-project)
 - Run `yarn test` to run the tests
 - Run `yarn lint` to run the linter
+- Run `yarn compile` to check typescript errors
 - Run `yarn xcode` to open the project in Xcode
 - Run `yarn ios:prod` to build the app for production and run it on iOS devices
-- Run `yarn compile` to check typescript errors
 
 # Works on iOS and Android
 

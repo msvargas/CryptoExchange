@@ -1,3 +1,4 @@
+// set all screens of navigator
 export type RootStackParamList = {
   Home: undefined;
   CoinDetails: { coinId: string };
