@@ -26,7 +26,7 @@ export default function InfoTooltip({ label, ...rest }: Props) {
     >
       <Popover.Content maxW="56">
         <Popover.Arrow />
-        <Box shadow="2" p="3" borderRadius="8">
+        <Box p="3" borderRadius="8">
           <Text fontSize="xs">{label}</Text>
         </Box>
       </Popover.Content>
