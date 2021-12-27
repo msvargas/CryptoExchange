@@ -72,6 +72,7 @@ function CryptoList() {
       windowSize={isDrawerOpen ? 21 : windowSize}
       removeClippedSubviews={true}
       showsVerticalScrollIndicator={false}
+      keyboardShouldPersistTaps="handled"
       refreshControl={
         <RefreshControlColorMode
           refreshing={refreshing}

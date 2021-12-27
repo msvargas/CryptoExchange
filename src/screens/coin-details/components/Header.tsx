@@ -9,7 +9,7 @@ type Props = {
   vibrantColor: string;
 };
 
-const BasicExample = ({ symbol, rank, vibrantColor }: Props) => {
+const Header = ({ symbol, rank, vibrantColor }: Props) => {
   const navigation = useNavigation();
 
   return (
@@ -30,4 +30,4 @@ const BasicExample = ({ symbol, rank, vibrantColor }: Props) => {
   );
 };
 
-export default BasicExample;
+export default Header;
